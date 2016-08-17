@@ -1,0 +1,95 @@
+import Foundation
+
+func convertToBiggest(numberArray : [Int]) ->Int{
+    var biggestArray = [Int]()
+    
+    
+    biggestArray.append(numberArray[0])
+    
+    for var index = 1; index < 4; index++ {
+        var smallest = true
+        for var y = 0; y < biggestArray.count; y++ {
+            if numberArray[index] > biggestArray[y] {
+                biggestArray.insert(numberArray[index], atIndex: y)
+                smallest = false
+                break
+            }
+        }
+        if (smallest) {
+            biggestArray.append(numberArray[index])
+        }
+        
+    }
+    
+    let result : String = "\(biggestArray[0])\(biggestArray[1])\(biggestArray[2])\(biggestArray[3])"
+    let returnNumber = Int(result)
+    
+    return returnNumber!
+}
+
+func convertToSmallest(numberArray : [Int]) ->Int {
+    
+    var smallestArray = [Int]()
+    smallestArray.append(numberArray[0])
+    
+    for var index = 1; index < 4; index++ {
+        var biggest = true
+        for var y = 0; y < smallestArray.count; y++ {
+            if numberArray[index] < smallestArray[y] {
+                smallestArray.insert(numberArray[index], atIndex: y)
+                biggest = false
+                break
+            }
+        }
+        if (biggest) {
+            smallestArray.append(numberArray[index])
+        }
+        
+    }
+    
+    let result : String = "\(smallestArray[0])\(smallestArray[1])\(smallestArray[2])\(smallestArray[3])"
+    let returnNumber = Int(result)
+    
+    return returnNumber!
+}
+
+
+func subtractNumbers(biggest : Int, smallest : Int) ->Int{
+    let result : Int
+    result = biggest - smallest
+    return result
+}
+
+
+func createDigitArray(number : Int) -> [Int] {
+    var numberArray = [Int]()
+    var i = Int(number)
+    while i > 0 {numberArray.append(i%10); i/=10}
+    numberArray = numberArray.reverse()
+    
+    while (numberArray.count < 4) {
+        numberArray.insert(0, atIndex: 0)
+    }
+    return numberArray
+}
+
+func find6174(var number : Int) -> Int{
+    var founded = false
+    var subtractedTimes : Int = 0
+    
+    while(!founded) {
+        subtractedTimes++
+        let numberArray = createDigitArray(number)
+        let biggest = convertToBiggest(numberArray)
+        let smallest = convertToSmallest(numberArray)
+        number = subtractNumbers(biggest, smallest: smallest)
+        
+        if (number == 6174) {
+            founded = true
+        }
+        
+    }
+    return subtractedTimes
+}
+
+find6174(8394)
