@@ -1,0 +1,67 @@
+import Foundation
+
+func Magic1089(number : Int) -> Int{
+    //step1
+    let numberArray = createThreeDigitArray(number)
+    let reversedNumber = reverse(numberArray)
+    let biggest = returnBiggest(number, number2: reversedNumber)
+    var smallest : Int
+    if biggest == number {
+        smallest = reversedNumber
+    } else {
+        smallest = number
+    }
+    let result = subtractNumbers(biggest, smallest: smallest)
+    
+    //step2
+    let numberArray1 = createThreeDigitArray(result)
+    let reversedNumber1 = reverse(numberArray1)
+    let result1 = addNumbers(result, smallest: reversedNumber1)
+    return result1
+}
+
+func returnBiggest(number1 : Int, number2 : Int) ->Int {
+    if number1 > number2 {
+        return number1
+    } else {
+        return number2
+    }
+}
+
+func subtractNumbers(biggest : Int, smallest : Int) ->Int{
+    let result : Int
+    result = biggest - smallest
+    return result
+}
+
+func reverse(numberArray : [Int]) -> Int {
+    var reversedArray = [Int]()
+    for var index = 2; index >= 0; index-- {
+        reversedArray.append(numberArray[index])
+    }
+    
+    let result : String = "\(reversedArray[0])\(reversedArray[1])\(reversedArray[2])"
+    let returnNumber = Int(result)
+    
+    return returnNumber!
+}
+
+func createThreeDigitArray(number : Int) -> [Int] {
+    var numberArray = [Int]()
+    var i = Int(number)
+    while i > 0 {numberArray.append(i%10); i/=10}
+    numberArray = numberArray.reverse()
+    
+    while (numberArray.count < 3) {
+        numberArray.insert(0, atIndex: 0)
+    }
+    return numberArray
+}
+
+func addNumbers(biggest : Int, smallest : Int) ->Int{
+    let result : Int
+    result = biggest + smallest
+    return result
+}
+
+Magic1089(294)
